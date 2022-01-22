@@ -2,11 +2,13 @@ import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify, render_template
 import pickle
+import os
 
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
 
 dataset = pd.read_csv('adult.csv')
+port = int(os.environ.get('PORT', 33507))
 
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
@@ -92,4 +94,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host = '0.0.0.0',port = port ,debug=True)
